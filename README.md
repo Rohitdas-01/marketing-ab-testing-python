@@ -82,7 +82,7 @@ The notebook's quality checks reported:
 | PSA (`psa`) | 23,524 | 420 |
 | **Total** | **588,101** | **14,843** |
 
-**Dataset file note:** The notebook is designed for the A/B testing dataset commonly named `marketing_AB.csv`. The `marketing_campaign.csv` file supplied alongside the notebook in the working files is a different dataset (365 rows and 17 Facebook/AdWords columns) and does not match the notebook. Place the correct A/B testing CSV in the project folder before running the notebook from start to finish.
+**Dataset file note:** This project uses the `marketing_AB.csv`. dataset for exploratory data analysis (EDA) and A/B testing. Place the CSV file in the dataset/ folder and use the relative file path in the notebook to load the data. Ensure the dataset is in the correct location before running the notebook from start to finish..
 
 ## Tools and Technologies
 
@@ -93,22 +93,22 @@ The notebook's quality checks reported:
 | NumPy | Numerical calculations |
 | SciPy (`scipy.stats`) | Statistical calculations for the z-test and confidence bound |
 | Matplotlib | Charts and visual comparisons |
-| Jupyter Notebook | Reproducible analysis workflow |
+| Jupyter Notebook | Data analysis and testing |
 | GitHub | Project hosting and version control |
 
 ## Project Workflow
 
-1. **Load and inspect the data** — review columns, data types, unique values, and missing values.
-2. **Clean the dataset** — remove the unnecessary index column and standardize the conversion field as Boolean.
-3. **Validate data quality** — check duplicate users, valid experiment groups, binary conversion values, and non-negative ad exposure.
-4. **Review group sizes** — identify the substantial difference in the number of users assigned to each group.
+1. **Load and inspect the data** - review columns, data types, unique values, and missing values.
+2. **Clean the dataset** - remove the unnecessary index column and standardize the conversion field as Boolean.
+3. **Validate data quality** - check duplicate users, valid experiment groups, binary conversion values, and non-negative ad exposure.
+4. **Review group sizes** - identify the substantial difference in the number of users assigned to each group.
 5. **Create a balanced analytical sample** — randomly select 23,524 users from the ad group to match the 23,524 PSA users, using `random_state=42`.
-6. **Compare conversion rates** — calculate the number of conversions and conversion rate in each balanced group.
-7. **Run the hypothesis test** — use a one-sided two-proportion z-test to test whether the ad group's conversion rate is higher.
-8. **Measure the effect size** — calculate absolute uplift in percentage points and relative lift.
-9. **Estimate uncertainty** — calculate a 95% one-sided lower confidence bound for the conversion-rate difference.
-10. **Explore ad exposure** — examine exposure counts, day/hour patterns, correlation, and conversion rates across exposure quartiles.
-11. **Interpret and recommend** — separate the main A/B test result from exploratory associations and identify follow-up experiments.
+6. **Compare conversion rates** - calculate the number of conversions and conversion rate in each balanced group.
+7. **Run the hypothesis test** - use a one-sided two-proportion z-test to test whether the ad group's conversion rate is higher.
+8. **Measure the effect size** - calculate absolute uplift in percentage points and relative lift.
+9. **Estimate uncertainty** - calculate a 95% one-sided lower confidence bound for the conversion-rate difference.
+10. **Explore ad exposure** - examine exposure counts, day/hour patterns, correlation, and conversion rates across exposure quartiles.
+11. **Interpret and recommend** - separate the main A/B test result from exploratory associations and identify follow-up experiments.
 
 ## Data Cleaning and Quality Checks
 
@@ -120,7 +120,7 @@ Before testing, it checks for missing values, duplicate user IDs, unexpected gro
 
 The original dataset contains 564,577 ad users and 23,524 PSA users. The notebook randomly samples 23,524 users from the ad group, creating a balanced analytical sample of **47,048 users**.
 
-This makes the group sizes equal for the notebook's comparison. However, equal group sizes are not required for a two-proportion z-test, and sampling down discards many ad-group records. The reported test results therefore apply to this sampled analysis; they should not be presented as if they were calculated from every original ad-group user.
+Balancing the sample helps us compare the Ad and PSA groups using equal numbers of users, so that the larger size of the Ad group does not dominate the comparison. By randomly selecting 23,524 users from each group, we can compare their conversion rates on an equal sample-size basis and assess whether the Ad group performs better than the PSA group. However, equal group sizes do not guarantee that both groups have equal ad exposure or identical characteristics.
 
 ## Exploratory Data Analysis
 
@@ -240,11 +240,11 @@ A simple structure for this Python-only project is:
 ```text
 marketing-ab-testing/
 │
-├── marketing_AB.csv
-│ 
+├── dataset/
+│   └── marketing_AB.csv
 │
-├── Marketing_AB_Testing_Analysis.ipynb
-│  
+├── notebooks/
+│   └── Marketing_AB_Testing_Analysis.ipynb
 │
 └── README.md
 ```
